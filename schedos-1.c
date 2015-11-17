@@ -20,12 +20,6 @@
 
 // UNCOMMENT THE NEXT LINE TO USE EXERCISE 8 CODE INSTEAD OF EXERCISE 6
 // #define __EXERCISE_8__
-// Use the following structure to choose between them:
-// #infdef __EXERCISE_8__
-// (exercise 6 code)
-// #else
-// (exercise 8 code)
-// #endif
 
 
 void
@@ -34,9 +28,16 @@ start(void)
 	int i;
 
 	for (i = 0; i < RUNCOUNT; i++) {
+		#ifndef __EXERCISE_8__
+		/* EXERCISE 6: use a system call to print characters *****************/
+		sys_print(PRINTCHAR);
+		#endif
+
+		#ifdef __EXERCISE_8__
 		// Write characters to the console, yielding after each one.
 		*cursorpos++ = PRINTCHAR;
 		sys_yield();
+		#endif
 	}
 
 	// Yield forever.

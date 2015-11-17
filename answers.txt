@@ -58,6 +58,11 @@ Exercise 5:
 
 (Exercise 6 is a coding exercise)
 
+    This was completed by printing the character to the screen with a system 
+    call (in schedos-1.c). This guarantees printing is atomic because 
+    interrupts are disabled in the kernel. I added code to schedos-kernel.c in
+    the interrupt handler, and the system call implemented was sys_print.
+
 
 Anything else you'd like us to know:
 
