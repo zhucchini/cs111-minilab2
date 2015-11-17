@@ -218,20 +218,64 @@ void
 schedule(void)
 {
 	pid_t pid = current->p_pid;
+	int j;
 
-	if (scheduling_algorithm == 0)
-		while (1) {
-			pid = (pid + 1) % NPROCS;
+	switch (scheduling_algorithm) {
+		case __EXERCISE_1__:
+			while (1) {
+				pid = (pid + 1) % NPROCS;
 
-			// Run the selected process, but skip
-			// non-runnable processes.
-			// Note that the 'run' function does not return.
-			if (proc_array[pid].p_state == P_RUNNABLE)
-				run(&proc_array[pid]);
-		}
+				// Run the selected process, but skip
+				// non-runnable processes.
+				// Note that the 'run' function does not return.
+				if (proc_array[pid].p_state == P_RUNNABLE)
+					run(&proc_array[pid]);
+			}
+			break;
+		/* EXERCISE 2:  priority based on PID *************************************************/
+		case __EXERCISE_2__:
+			while (1) {
+				for (j = 2; j < NPROCS; j++) {
+					// when process 1 calls sys_yield, its state is still P_RUNNABLE
+					if (proc_array[j].p_state == P_RUNNABLE)
+						run(&proc_array[j]);
+				}
+			}
+			break;
+		/* EXERCISE 4A: priority determined by p_priority field *******************************/
+		case __EXERCISE_4A__:
+			while (1) {
+				for (j = 2; j < NPROCS; j++) {
+					// when process 1 calls sys_yield, its state is still P_RUNNABLE
+					if (proc_array[j].p_state == P_RUNNABLE)
+						run(&proc_array[j]);
+				}
+			}
+			break;
+		/* EXERCISE 4B: proportional-share scheduling *****************************************/
+		case __EXERCISE_4B__:
+			while (1) {
+				for (j = 2; j < NPROCS; j++) {
+					// when process 1 calls sys_yield, its state is still P_RUNNABLE
+					if (proc_array[j].p_state == P_RUNNABLE)
+						run(&proc_array[j]);
+				}
+			}
+			break;
+		default:
+			break;
+	}
 
 	// If we get here, we are running an unknown scheduling algorithm.
 	cursorpos = console_printf(cursorpos, 0x100, "\nUnknown scheduling algorithm %d\n", scheduling_algorithm);
 	while (1)
 		/* do nothing */;
 }
+
+/*
+#define __EXERCISE_1__   0  // the initial algorithm
+#define __EXERCISE_2__   2  // strict priority scheduling (exercise 2)
+#define __EXERCISE_4A__ 41  // p_priority algorithm (exercise 4.a)
+#define __EXERCISE_4B__ 42  // p_share algorithm (exercise 4.b)
+#define __EXERCISE_7__   7  // any algorithm for exercise 7
+*/

@@ -1,26 +1,38 @@
-Name:
-UCLA ID:
+Name:           Caroline Zhu
+UCLA ID:        204163619
 
-Collaborators:
+Collaborators:  N/A
 
 -------------------------------------------------------------------------------
 
 Response to Exercise 1:
 
-The name of the scheduling algorithm is:
+The name of the scheduling algorithm is: round-robin
 
 
-(Exercise 2 is a coding exercise)
+(Exercise 2 is a coding exercise):
+
+Strict priority scheduling is implemented in the schedule() function in 
+schedos-kern.c. It is in the switch statement, case: __EXERCISE_2__.
 
 
 Response to Exercise 3:
 
-Average turnaround time for scheduling_algorithm 0:
-Average turnaround time for scheduling_algorithm 1:
+Average turnaround time for scheduling_algorithm 0: 1278.5 ms
+    320 * 4 - 3 ms = 1277 ms
+    320 * 4 - 2 ms = 1278 ms
+    320 * 4 - 1 ms = 1279 ms
+    320 * 4 - 0 ms = 1280 ms
+    Average: 1278.5 ms
 
-Average wait time for scheduling_algorithm 0:
-Average wait time for scheduling_algorithm 1:
+Average turnaround time for scheduling_algorithm 1: 800 ms
+    (320 + 640 + 960 + 1280)/4 = 800 ms
 
+Average wait time for scheduling_algorithm 0: 1.5 ms
+    (0 + 1 + 2 + 3)/4 = 1.5 ms
+
+Average wait time for scheduling_algorithm 1: 480 ms
+    (0 + 320 + 640 + 960)/4 = 480 ms
 
 Exercise 4:
 
