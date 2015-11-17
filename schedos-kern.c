@@ -196,8 +196,7 @@ interrupt(registers_t *reg)
 
     /* EXERCISE 6 ******************************************/
     case INT_SYS_PRINT:
-        *cursorpos++ = reg->reg_eax;
-
+        *cursorpos++        = reg->reg_eax;
         run(current);
 
 	case INT_CLOCK:
