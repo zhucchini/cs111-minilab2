@@ -133,11 +133,6 @@ start(void)
 		process_t *proc = &proc_array[i];
 		uint32_t stack_ptr = PROC1_START + i * PROC_SIZE;
 
-		// initialize stuff
-		proc->p_share = i;
-		proc->p_runcount = i;
-		proc->p_priority = i;
-
 		// Initialize the process descriptor
 		special_registers_init(proc);
 

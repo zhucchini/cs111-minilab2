@@ -36,8 +36,9 @@ start(void)
 		#ifdef __EXERCISE_8__
 		// Write characters to the console, yielding after each one.
 		*cursorpos++ = PRINTCHAR;
-		sys_yield();
 		#endif
+
+		sys_yield();
 	}
 
 	// Yield forever.
