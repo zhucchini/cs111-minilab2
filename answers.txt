@@ -48,6 +48,13 @@ Did you complete Exercise 4A, Exercise 4B, or both for extra credit?
 
 Exercise 5:
 
+    We can see that the timer interrupt during process 4. The round-robin 
+    scheduling managed to complete 4 executions before the timer expired, so
+    process 4 was unable to print during the fifth round-robin cycle. This
+    resulted in:
+
+    1234 1234 1234 1234 123 1234
+
 
 (Exercise 6 is a coding exercise)
 
