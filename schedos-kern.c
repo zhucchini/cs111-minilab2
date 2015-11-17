@@ -97,7 +97,7 @@ start(void)
 
 	// Set up hardware (schedos-x86.c)
 	segments_init();
-	interrupt_controller_init(1);
+	interrupt_controller_init(0);
 	console_clear();
 
 	// Initialize process descriptors as empty
@@ -111,27 +111,32 @@ start(void)
 	proc_array[1].p_share	 = __SHARE_1__;
 	proc_array[1].p_runcount = __SHARE_1__;
 	proc_array[1].p_priority = __PRIORITY_1__;
-	proc_array[1].p_lottery  = LOTTERY_1__;
+	// proc_array[1].p_lottery  = LOTTERY_1__;
 
 	proc_array[2].p_share    = __SHARE_2__;
 	proc_array[2].p_runcount = __SHARE_2__;
 	proc_array[2].p_priority = __PRIORITY_2__;
-	proc_array[2].p_lottery  = LOTTERY_2__;
+	// proc_array[2].p_lottery  = LOTTERY_2__;
 
 	proc_array[3].p_share    = __SHARE_3__;
 	proc_array[3].p_runcount = __SHARE_3__;
 	proc_array[3].p_priority = __PRIORITY_3__;
-	proc_array[3].p_lottery  = LOTTERY_3__;
+	// proc_array[3].p_lottery  = LOTTERY_3__;
 
 	proc_array[4].p_share    = __SHARE_4__;
 	proc_array[4].p_runcount = __SHARE_4__;
 	proc_array[4].p_priority = __PRIORITY_4__;
-	proc_array[4].p_lottery  = LOTTERY_4__;
+	// proc_array[4].p_lottery  = LOTTERY_4__;
 
 	// Set up process descriptors (the proc_array[])
 	for (i = 1; i < NPROCS; i++) {
 		process_t *proc = &proc_array[i];
 		uint32_t stack_ptr = PROC1_START + i * PROC_SIZE;
+
+		// initialize stuff
+		proc->p_share = i;
+		proc->p_runcount = i;
+		proc->p_priority = i;
 
 		// Initialize the process descriptor
 		special_registers_init(proc);
@@ -157,7 +162,7 @@ start(void)
 	//   41 = p_priority algorithm (exercise 4.a)
 	//   42 = p_share algorithm (exercise 4.b)
 	//    7 = any algorithm that you may implement for exercise 7
-	scheduling_algorithm = 0;
+	scheduling_algorithm = 42;
 
 	// Switch to the first process.
 	run(&proc_array[1]);
