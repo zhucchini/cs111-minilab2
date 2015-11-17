@@ -97,7 +97,7 @@ sys_share(int share)
 /*****************************************************************************
  * sys_print(character)
  *
- *   IF YOU IMPLEMENT EXERCISE 4.B, NAME YOUR SYSTEM CALL sys_share .
+ *   Prints a character to the output
  *
  *****************************************************************************/
 static inline void
