@@ -108,3 +108,33 @@ sys_print(uint32_t character)
 		         "a" (character)
 		     : "cc", "memory");
 }
+
+/*****************************************************************************
+ * sys_addTicket(pid_t pid)
+ *
+ *   TODO: finish this
+ *
+ *****************************************************************************/
+static inline void
+sys_addTicket(pid_t pid)
+{
+	asm volatile("int %0\n"
+		     : : "i" (INT_SYS_ADDTICKET),
+		         "a" (character)
+		     : "cc", "memory");
+}
+
+/*****************************************************************************
+ * sys_deleteTicket(pid_t pid)
+ *
+ *   TODO: finish this
+ *
+ *****************************************************************************/
+static inline void
+sys_deleteTicket(pid_t pid)
+{
+	asm volatile("int %0\n"
+		     : : "i" (INT_SYS_DELTICKET),
+		         "a" (character)
+		     : "cc", "memory");
+}

@@ -111,22 +111,38 @@ start(void)
 	proc_array[1].p_share	 = __SHARE_1__;
 	proc_array[1].p_runcount = __SHARE_1__;
 	proc_array[1].p_priority = __PRIORITY_1__;
+<<<<<<< Updated upstream
 	// proc_array[1].p_lottery  = LOTTERY_1__;
+=======
+	proc_array[1].p_lottery  = LOTTERY_1__;
+>>>>>>> Stashed changes
 
 	proc_array[2].p_share    = __SHARE_2__;
 	proc_array[2].p_runcount = __SHARE_2__;
 	proc_array[2].p_priority = __PRIORITY_2__;
+<<<<<<< Updated upstream
 	// proc_array[2].p_lottery  = LOTTERY_2__;
+=======
+	proc_array[2].p_lottery  = LOTTERY_2__;
+>>>>>>> Stashed changes
 
 	proc_array[3].p_share    = __SHARE_3__;
 	proc_array[3].p_runcount = __SHARE_3__;
 	proc_array[3].p_priority = __PRIORITY_3__;
+<<<<<<< Updated upstream
 	// proc_array[3].p_lottery  = LOTTERY_3__;
+=======
+	proc_array[3].p_lottery  = LOTTERY_3__;
+>>>>>>> Stashed changes
 
 	proc_array[4].p_share    = __SHARE_4__;
 	proc_array[4].p_runcount = __SHARE_4__;
 	proc_array[4].p_priority = __PRIORITY_4__;
+<<<<<<< Updated upstream
 	// proc_array[4].p_lottery  = LOTTERY_4__;
+=======
+	proc_array[4].p_lottery  = LOTTERY_4__;
+>>>>>>> Stashed changes
 
 	// Set up process descriptors (the proc_array[])
 	for (i = 1; i < NPROCS; i++) {

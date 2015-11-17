@@ -35,6 +35,7 @@ typedef struct process {
     unsigned int p_share;       // Process share (EXERCISE 4B)
     unsigned int p_runcount;    // Process run times; runcount of 0 means we can't
                                 //   run it anymore (EXERCISE 4B)
+    unsigned int p_lottery;		// Used for lottery (EXERCISE 7)
 } process_t;
 
 
