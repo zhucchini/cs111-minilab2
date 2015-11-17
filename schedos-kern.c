@@ -52,18 +52,27 @@ int scheduling_algorithm;
 // UNCOMMENT THESE LINES IF YOU DO EXERCISE 4.A
 // Use these #defines to initialize your implementation.
 // Changing one of these lines should change the initialization.
-// #define __PRIORITY_1__ 1
-// #define __PRIORITY_2__ 2
-// #define __PRIORITY_3__ 3
-// #define __PRIORITY_4__ 4
+#define __PRIORITY_1__ 1
+#define __PRIORITY_2__ 2
+#define __PRIORITY_3__ 3
+#define __PRIORITY_4__ 4
 
 // UNCOMMENT THESE LINES IF YOU DO EXERCISE 4.B
 // Use these #defines to initialize your implementation.
 // Changing one of these lines should change the initialization.
-// #define __SHARE_1__ 1
-// #define __SHARE_2__ 2
-// #define __SHARE_3__ 3
-// #define __SHARE_4__ 4
+#define __SHARE_1__ 1
+#define __SHARE_2__ 2
+#define __SHARE_3__ 3
+#define __SHARE_4__ 4
+
+// EXERCISE 7
+// Lottery parameters must be <= MAX_TICKET_COUNT
+// MAX_TICKET_COUNT is adjustable
+#define MAX_TICKET_COUNT 100
+#define __LOTTERY_1__ 5
+#define __LOTTERY_2__ 10
+#define __LOTTERY_3__ 15
+#define __LOTTERY_4__ 20
 
 // USE THESE VALUES FOR SETTING THE scheduling_algorithm VARIABLE.
 #define __EXERCISE_1__   0  // the initial algorithm
@@ -98,17 +107,31 @@ start(void)
 		proc_array[i].p_state = P_EMPTY;
 	}
 
+	// initialize all the share/priority variables
+	proc_array[1].p_share	 = __SHARE_1__;
+	proc_array[1].p_runcount = __SHARE_1__;
+	proc_array[1].p_priority = __PRIORITY_1__;
+	proc_array[1].p_lottery  = LOTTERY_1__;
+
+	proc_array[2].p_share    = __SHARE_2__;
+	proc_array[2].p_runcount = __SHARE_2__;
+	proc_array[2].p_priority = __PRIORITY_2__;
+	proc_array[2].p_lottery  = LOTTERY_2__;
+
+	proc_array[3].p_share    = __SHARE_3__;
+	proc_array[3].p_runcount = __SHARE_3__;
+	proc_array[3].p_priority = __PRIORITY_3__;
+	proc_array[3].p_lottery  = LOTTERY_3__;
+
+	proc_array[4].p_share    = __SHARE_4__;
+	proc_array[4].p_runcount = __SHARE_4__;
+	proc_array[4].p_priority = __PRIORITY_4__;
+	proc_array[4].p_lottery  = LOTTERY_4__;
+
 	// Set up process descriptors (the proc_array[])
 	for (i = 1; i < NPROCS; i++) {
 		process_t *proc = &proc_array[i];
 		uint32_t stack_ptr = PROC1_START + i * PROC_SIZE;
-
-        // Initialize the priorities for each process (lab 4A)
-        proc->p_priority = i;
-
-        // Initialize the proportional scheduling variables (lab 4B)
-        proc->p_share = i;
-        proc->p_runcount = i;
 
 		// Initialize the process descriptor
 		special_registers_init(proc);
@@ -183,21 +206,30 @@ interrupt(registers_t *reg)
 		current->p_exit_status = reg->reg_eax;
 		schedule();
 
-    /* EXERCISE 4A ******************************************/
+    /* EXERCISE 4A ***********************************************************/
 	case INT_SYS_SETPRIORITY:
         current->p_priority = reg->reg_eax;
 		run(current);
 
-    /* EXERCISE 4B ******************************************/
+    /* EXERCISE 4B ***********************************************************/
 	case INT_SYS_SHARE:
         current->p_share    = reg->reg_eax;
         current->p_runcount = reg->reg_eax;
 		run(current);
 
-    /* EXERCISE 6 ******************************************/
+    /* EXERCISE 6 ************************************************************/
     case INT_SYS_PRINT:
         *cursorpos++        = reg->reg_eax;
         run(current);
+
+    /* EXERCISE 7 ************************************************************/
+    /*case INT_SYS_ADDTICKET:
+        addTicket(reg->reg_eax);
+        run(current);
+
+    case INT_SYS_DELTICKET:
+        deleteTicket(reg->reg_eax);
+        run(current);*/
 
 	case INT_CLOCK:
 		// A clock interrupt occurred (so an application exhausted its
