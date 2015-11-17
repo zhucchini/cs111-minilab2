@@ -7,13 +7,13 @@ Collaborators:  N/A
 
 Response to Exercise 1:
 
-The name of the scheduling algorithm is: round-robin
+    The name of the scheduling algorithm is: round-robin
 
 
 (Exercise 2 is a coding exercise):
 
-Strict priority scheduling is implemented in the schedule() function in 
-schedos-kern.c. It is in the switch statement, case: __EXERCISE_2__.
+    Strict priority scheduling is implemented in the schedule() function in 
+    schedos-kern.c. It is in the switch statement, case: __EXERCISE_2__.
 
 
 Response to Exercise 3:
@@ -34,9 +34,16 @@ Average wait time for scheduling_algorithm 0: 1.5 ms
 Average wait time for scheduling_algorithm 1: 480 ms
     (0 + 320 + 640 + 960)/4 = 480 ms
 
+
 Exercise 4:
 
 Did you complete Exercise 4A, Exercise 4B, or both for extra credit?
+
+    Yes. Both were implemented in the schedule() function in schedos-kern.c, in
+    cases __EXERCISE_4A__ and __EXERCISE_4B__ respectively. Variables were added
+    to the process_t struct in schedos-kern.h to store values for use by the
+    scheduler. These values can be set by system calls added in schedos-app.h, 
+    which call the interrupt handler in schedos-kernel.c
 
 
 Exercise 5:

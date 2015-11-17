@@ -103,6 +103,13 @@ start(void)
 		process_t *proc = &proc_array[i];
 		uint32_t stack_ptr = PROC1_START + i * PROC_SIZE;
 
+        // Initialize the priorities for each process (lab 4A)
+        proc->p_priority = i;
+
+        // Initialize the proportional scheduling variables (lab 4B)
+        proc->p_share = i;
+        proc->p_runcount = i;
+
 		// Initialize the process descriptor
 		special_registers_init(proc);
 
@@ -176,14 +183,15 @@ interrupt(registers_t *reg)
 		current->p_exit_status = reg->reg_eax;
 		schedule();
 
-	case INT_SYS_USER1:
-		// 'sys_user*' are provided for your convenience, in case you
-		// want to add a system call.
-		/* Your code here (if you want). */
+    /* EXERCISE 4A ******************************************/
+	case INT_SYS_SETPRIORITY:
+        current->p_priority = reg->reg_eax;
 		run(current);
 
-	case INT_SYS_USER2:
-		/* Your code here (if you want). */
+    /* EXERCISE 4B ******************************************/
+	case INT_SYS_SHARE:
+        current->p_share    = reg->reg_eax;
+        current->p_runcount = reg->reg_eax;
 		run(current);
 
 	case INT_CLOCK:
@@ -218,7 +226,9 @@ void
 schedule(void)
 {
 	pid_t pid = current->p_pid;
-	int j;
+	pid_t j;
+	unsigned int lowest_priority = 0xffffffff; // initialize to the largest 
+                                               // possible unsigned int
 
 	switch (scheduling_algorithm) {
 		case __EXERCISE_1__:
@@ -232,34 +242,46 @@ schedule(void)
 					run(&proc_array[pid]);
 			}
 			break;
-		/* EXERCISE 2:  priority based on PID *************************************************/
+		/* EXERCISE 2:  priority based on PID ********************************/
 		case __EXERCISE_2__:
 			while (1) {
 				for (j = 2; j < NPROCS; j++) {
-					// when process 1 calls sys_yield, its state is still P_RUNNABLE
 					if (proc_array[j].p_state == P_RUNNABLE)
 						run(&proc_array[j]);
 				}
 			}
 			break;
-		/* EXERCISE 4A: priority determined by p_priority field *******************************/
+		/* EXERCISE 4A: priority determined by p_priority field **************/
 		case __EXERCISE_4A__:
-			while (1) {
-				for (j = 2; j < NPROCS; j++) {
-					// when process 1 calls sys_yield, its state is still P_RUNNABLE
-					if (proc_array[j].p_state == P_RUNNABLE)
-						run(&proc_array[j]);
+			while (1) { // find the process with the lowest priority
+				for (j = 0; j < NPROCS; j++) {
+					if (proc_array[j].p_state == P_RUNNABLE && 
+						proc_array[j].p_priority < lowest_priority)
+						lowest_priority = proc_array[j].p_priority;
 				}
+
+				pid = (pid + 1) % NPROCS;   // alternate between equal priority
+
+                if (proc_array[pid].p_state == P_RUNNABLE &&
+                    proc_array[pid].p_priority <= lowest_priority) {
+                    run(&proc_array[pid]);
+                }
 			}
 			break;
-		/* EXERCISE 4B: proportional-share scheduling *****************************************/
+		/* EXERCISE 4B: proportional-share scheduling ************************/
 		case __EXERCISE_4B__:
 			while (1) {
-				for (j = 2; j < NPROCS; j++) {
-					// when process 1 calls sys_yield, its state is still P_RUNNABLE
-					if (proc_array[j].p_state == P_RUNNABLE)
-						run(&proc_array[j]);
-				}
+				if (proc_array[pid].p_state == P_RUNNABLE) {
+                    if (proc_array[pid].p_runcount == 0)
+                        proc_array[pid].p_runcount = proc_array[pid].p_share;
+                    else {
+                        proc_array[pid].p_runcount--;
+                        run(&proc_array[pid]);
+                    }
+                }
+
+                // if we can't run this process anymore, move to the next one
+                pid = (pid + 1) % NPROCS;
 			}
 			break;
 		default:
@@ -267,7 +289,8 @@ schedule(void)
 	}
 
 	// If we get here, we are running an unknown scheduling algorithm.
-	cursorpos = console_printf(cursorpos, 0x100, "\nUnknown scheduling algorithm %d\n", scheduling_algorithm);
+	cursorpos = console_printf(cursorpos, 0x100, "\nUnknown scheduling algorithm 
+                                %d\n", scheduling_algorithm);
 	while (1)
 		/* do nothing */;
 }
