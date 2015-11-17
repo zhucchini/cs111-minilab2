@@ -112,7 +112,7 @@ sys_print(uint32_t character)
 /*****************************************************************************
  * sys_addTicket(pid_t pid)
  *
- *   TODO: finish this
+ *   Adds a ticket to the ticket list
  *
  *****************************************************************************/
 static inline void
@@ -120,14 +120,14 @@ sys_addTicket(pid_t pid)
 {
 	asm volatile("int %0\n"
 		     : : "i" (INT_SYS_ADDTICKET),
-		         "a" (character)
+		         "a" (pid)
 		     : "cc", "memory");
 }
 
 /*****************************************************************************
  * sys_deleteTicket(pid_t pid)
  *
- *   TODO: finish this
+ *   Removes a ticket from the ticket list
  *
  *****************************************************************************/
 static inline void
@@ -135,6 +135,6 @@ sys_deleteTicket(pid_t pid)
 {
 	asm volatile("int %0\n"
 		     : : "i" (INT_SYS_DELTICKET),
-		         "a" (character)
+		         "a" (pid)
 		     : "cc", "memory");
 }
