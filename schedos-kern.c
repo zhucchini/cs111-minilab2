@@ -194,6 +194,11 @@ interrupt(registers_t *reg)
         current->p_runcount = reg->reg_eax;
 		run(current);
 
+    /* EXERCISE 6 ******************************************/
+    case INT_SYS_PRINT:
+        *cursorpos++ = reg->reg_eax;
+        run(current);
+
 	case INT_CLOCK:
 		// A clock interrupt occurred (so an application exhausted its
 		// time quantum).

@@ -16,6 +16,7 @@
 #define INT_SYS_EXIT		49
 #define INT_SYS_SETPRIORITY	50
 #define INT_SYS_SHARE		51
+#define INT_SYS_PRINT		52
 
 
 // The current screen cursor position (stored at memory location 0x198000).
