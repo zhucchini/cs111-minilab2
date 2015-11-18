@@ -34,8 +34,15 @@ start(void)
 		#endif
 
 		#ifdef __EXERCISE_8__
-		// Write characters to the console, yielding after each one.
+		/* EXERCISE 8: use a lock to prevent race conditions *****************/
+		// spinlock until we obtain write lock
+		while (atomic_swap(&spinlock, 1) != 0)
+			continue;
+		// write
 		*cursorpos++ = PRINTCHAR;
+
+		// release write lock
+		atomic_swap(&spinlock, 0);
 		#endif
 
 		sys_yield();
