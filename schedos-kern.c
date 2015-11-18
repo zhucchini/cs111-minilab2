@@ -77,7 +77,7 @@ int scheduling_algorithm;
 // Variables for implementation of exercise 7
 int   ticket_count;
 unsigned seed = 123456789;
-unsigned a = 1103515245, m = 0xFFFFFFFF, c = 12345;
+unsigned a = 16807, m = 0x7FFFFFFF;
 pid_t tickets[MAX_TICKET_COUNT];
 
 // Helper functions for exercise 7
@@ -106,7 +106,7 @@ void deleteTicket(pid_t pid) {
 
 // pseudo-random number generator
 unsigned random() {
-    seed = (a * seed + c) % m;
+    seed = (a * seed) % m;
     return seed;
 }
 
@@ -164,11 +164,19 @@ start(void)
     proc_array[4].p_runcount = __SHARE_4__;
     proc_array[4].p_priority = __PRIORITY_4__;
     proc_array[4].p_lottery  = __LOTTERY_4__;
+    ticket_count = 0;
 
     // Set up process descriptors (the proc_array[])
     for (i = 1; i < NPROCS; i++) {
         process_t *proc = &proc_array[i];
         uint32_t stack_ptr = PROC1_START + i * PROC_SIZE;
+
+        /* EXERCISE 7: load the tickets **************************************/
+        int j = 0;
+        while (j < proc_array[i].p_lottery) {
+            addTicket(proc_array[i].p_pid);
+            j++;
+        }
 
         // Initialize the process descriptor
         special_registers_init(proc);
