@@ -70,7 +70,7 @@ Anything else you'd like us to know:
 
 Extra credit exercises:
 
-Exercise 4A and 4B were both completed
+Exercise 4A and 4B were both completed.
 
 
 Exercise 7 was implemented using a lottery scheduler.
@@ -90,3 +90,9 @@ Exercise 7 was implemented using a lottery scheduler.
     at around line 70 in schedos-kern.c. These numbers can be adjusted such that
     the sum of these constants is <= MAX_TICKET_NUMBER.
 
+
+Exercise 8 was completed.
+
+    Exercise 8 was completed using the atomic_swap function on a lock variable
+    to synchronize writing to the console. This lock variable was declared in 
+    shared mmeory
