@@ -66,6 +66,27 @@ Exercise 5:
 
 Anything else you'd like us to know:
 
-
+-------------------------------------------------------------------------------
 
 Extra credit exercises:
+
+Exercise 4A and 4B were both completed
+
+
+Exercise 7 was implemented using a lottery scheduler.
+
+    I implemented interrupts to add and remove tickets, which would be placed 
+    in a pid array by a process using a system call. When the lottery scheduler
+    is used, I call a random() function (pseudorandom generator) to randomly
+    pick a value from that array. The values I chose for the RNG were found on
+    the Wikipedia article here:
+    https://en.wikipedia.org/wiki/Linear_congruential_generator
+
+    After a ticket is run, it is removed from the ticket array.
+
+    Currently, there is a total of MAX_TICKET_NUMBER of lottery tickets, which is
+    currently set to 100. You can test the functionality of my implementation by
+    adjusting MAX_TICKET_NUMBER and changing the #define __LOTTERY_X__ constants
+    at around line 70 in schedos-kern.c. These numbers can be adjusted such that
+    the sum of these constants is <= MAX_TICKET_NUMBER.
+
